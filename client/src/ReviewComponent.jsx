@@ -24,7 +24,8 @@ export default class ReviewComponent extends React.Component {
         let restaurantID = 0
         axios.get('/api/restaurants')
             .then(({data}) => {
-                let n = Math.floor(Math.random() * Math.floor(8))
+                console.log('api restaurant data', data)
+                let n = Math.floor(Math.random() * 100)
                 this.setState({
                     RestaurantName: data[n].name,
                     RestaurantID: data[n].id,
@@ -38,6 +39,7 @@ export default class ReviewComponent extends React.Component {
             headers: {'restaurant_id': this.state.RestaurantID}
         }) 
         .then(({data}) => {
+            console.log('reviews data received', data)
             let reviews = [];
             data.forEach(review => {
                 let counts = review.counts.split(',');
@@ -60,6 +62,7 @@ export default class ReviewComponent extends React.Component {
                     headers: {'user_id': review.user_id}
                 })
                 .then(({data}) => {
+                    console.log('users data received', data)
                     let user_counts = data[0].counts.split(',');
                     newReview.username = data[0].name
                     newReview.location = data[0].location
@@ -71,6 +74,7 @@ export default class ReviewComponent extends React.Component {
                         headers: {'review_id': review.id}
                     })
                     .then(({data}) => {
+                        console.log('photo data received', data)
                         let new_album = [];
                         data.forEach(photo => {
                             new_album.push(photo.src)

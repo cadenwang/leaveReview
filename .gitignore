@@ -1,1 +1,7 @@
 node_modules
+restaurants.txt
+users.txt
+reviews.txt
+restaurantsmongo.tsv
+reviewsmongo.tsv
+usersmongo.tsv

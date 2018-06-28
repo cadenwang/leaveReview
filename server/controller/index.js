@@ -1,7 +1,7 @@
-const { users } = require('../../database_postgresql/schema.js');
-const { photos } = require('../../database_postgresql/schema.js');
-const { restaurants } = require('../../database_postgresql/schema.js');
-const { reviews } = require('../../database_postgresql/schema.js');
+const { users } = require('../../database/schema');
+const { photos } = require('../../database/schema');
+const { restaurants } = require('../../database/schema');
+const { reviews } = require('../../database/schema');
 
 const user_controllers = {
     get: function(req, res) {
@@ -22,6 +22,12 @@ const user_controllers = {
     post: function(req, res) {
         console.log('test')
         res.send('applied')
+    },
+    put: function(req, res) {
+        res.send('updated');
+    },
+    delete: function(req, res) {
+        res.send('deleted');
     }
 }
 
@@ -44,6 +50,12 @@ const photo_controllers = {
     post: function(req, res) {
         console.log('test')
         res.send('applied')
+    },
+    put: function(req, res) {
+        res.send('updated');
+    },
+    delete: function(req, res) {
+        res.send('deleted');
     }
 }
 
@@ -62,6 +74,12 @@ const restaurant_controllers = {
     post: function(req, res) {
         console.log('test')
         res.send('applied')
+    },
+    put: function(req, res) {
+        res.send('updated');
+    },
+    delete: function(req, res) {
+        res.send('deleted');
     }
 }
 
@@ -83,19 +101,25 @@ const review_controllers = {
         })
     },
     post: function(req, res) {
-        console.log('posting')
-        console.log(req.body.restaurantID)
-        console.log(req.body.reviewDescription)
-        console.log(req.body.date)
-        console.log(req.body.counts)
-        console.log(req.body.rating)
-        console.log(req.body.user_id)
+        // console.log('posting')
+        // console.log(req.body.restaurantID)
+        // console.log(req.body.reviewDescription)
+        // console.log(req.body.date)
+        // console.log(req.body.counts)
+        // console.log(req.body.rating)
+        // console.log(req.body.user_id)
         let x = req.body.restaurantID
         let newReview = {'date': req.body.date, 'counts': req.body.counts, 'rating': req.body.rating, 'user_id': req.body.user_id, 'restaurant_id': req.body.restaurantID, 'description': req.body.reviewDescription}
         //  restaurant_id': req.body.restaurantID, 'description': req.body.reviewDescription}
-        console.log(newReview)
+        // console.log(newReview)
         reviews.insertOrUpdate(newReview);
         res.send('applied')
+    },
+    put: function(req, res) {
+        res.send('updated');
+    },
+    delete: function(req, res) {
+        res.send('deleted');
     }
 }
 
