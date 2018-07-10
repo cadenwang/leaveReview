@@ -25,7 +25,8 @@ export default class ReviewComponent extends React.Component {
         axios.get('/api/restaurants')
             .then(({data}) => {
                 console.log('api restaurant data', data)
-                let n = Math.floor(Math.random() * 100)
+                let n = this.state.RestaurantID - 1;
+                console.log(data[n]);
                 this.setState({
                     RestaurantName: data[n].name,
                     RestaurantID: data[n].id,
@@ -59,7 +60,7 @@ export default class ReviewComponent extends React.Component {
                     photos: null
                 }
                 axios.get('api/users', {
-                    headers: {'user_id': review.user_id}
+                    headers: {'user_id': review.users_id}
                 })
                 .then(({data}) => {
                     console.log('users data received', data)

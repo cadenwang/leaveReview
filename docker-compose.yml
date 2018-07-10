@@ -1,0 +1,28 @@
+version: '3.1'
+services:
+  webapp:
+    
+    image: cawa7995/sdcclient
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: "mysql://root:root@db/yelp"
+  # db:
+  #   image: mariadb:latest
+  #   restart: always
+  #   ports:
+  #     - 3306:3306
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: root
+  #     MYSQL_DATABASE: yelp
+  #   volumes:
+  #     - dbdata:/var/lib/mysql/data
+
+  # adminer:
+  #   image: adminer
+  #   restart: always
+  #   ports:
+  #     - 3001:3001
+
+# volumes:
+#   dbdata:

@@ -1,0 +1,48 @@
+
+
+config:
+  target: 'http://localhost:3000'
+  phases:
+    - duration: 60
+      arrivalRate: 250
+  processor: "./my-functions.js"
+  defaults:
+    headers:
+      x-my-service-auth: '987401838271002188298567'
+scenarios:
+  - name: "get requests"
+    flow:
+    # - get:
+    #     url: "/"
+    - get:
+        url: "/api/users"
+    - get: 
+        url: "/api/restaurants"
+    - get:
+        url: "/api/photos"
+    - get:
+        url: "/api/reviews"
+  # - name: "add new user"
+  #   flow:
+  #   - function: "generateRandomUsers"
+  #   - post:
+  #       url: "/api/users"
+  #       json:
+  #         name: "{{ name }}"
+  #         photo: "{{ photo }}"
+  #         counts: "{{ counts }}"
+  #         location: "{{ location }}"
+  #   - log: "sent post request to /users with {{ name }}, {{ photo }}, {{ counts }}, {{ location }}"
+  # - name: "add new review"
+  #   flow:
+  #   - function: "generateRandomReviews"
+  #   - post:
+  #       url: "/api/reviews"
+  #       json:
+  #         date: "{{ date }}"
+  #         counts: "{{ counts }}"
+  #         rating: "{{ rating }}"
+  #         users_id: "{{ users_id }}"
+  #         restaurant_id: "{{ restaurant_id }}"
+  #         description: "{{ description }}"
+  #   - log: "Sent post request to /reviews with {{ date }}, {{ counts }}, {{ rating }}, {{ users_id }}, {{ restaurant_id }}, {{ description }}"

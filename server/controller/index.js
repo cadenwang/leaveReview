@@ -1,131 +1,115 @@
-const { users } = require('../../database/schema');
-const { photos } = require('../../database/schema');
-const { restaurants } = require('../../database/schema');
-const { reviews } = require('../../database/schema');
+const connection = require('../../database/index.js');
 
 const user_controllers = {
-    get: function(req, res) {
-        users.findAll({
-            where: {
-                id: req.headers.user_id
-            }
-        })
-        .then(data => {
-            console.log('user data received')
-            res.status(200).send(data)
-        })
-        .catch(err => {
-            console.log('error receiving user data', err)
-            res.status(401)
-        })
-    },
-    post: function(req, res) {
-        console.log('test')
-        res.send('applied')
-    },
-    put: function(req, res) {
-        res.send('updated');
-    },
-    delete: function(req, res) {
-        res.send('deleted');
-    }
+  get: function(req, res) {
+  //   users.findAll({
+  //     where: {
+  //         id: req.headers.user_id
+  //     }
+  // })
+    connection.query(`SELECT * FROM users WHERE id=${random()}`, (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      res.status(200).send(result);
+      // console.log(result);
+    })
+  },
+  post: function(req, res) {
+    connection.query(`INSERT INTO reviews (name, photo, counts, location) VALUES (${req.body.name}, ${req.body.photo}, ${req.body.counts}, ${req.body.location})` , (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      // console.log(result);
+      res.status(200).send('user created');
+    })
+  }
 }
 
-const photo_controllers = {
-    get: function(req, res) {
-        photos.findAll({
-            where: {
-                review_id: req.headers.review_id
-            }
-        })
-        .then(data => {
-            console.log('photo data received')
-            res.status(200).send(data)
-        })
-        .catch(err => {
-            console.log('error receiving photo data', err)
-            res.status(401)
-        })
-    },
-    post: function(req, res) {
-        console.log('test')
-        res.send('applied')
-    },
-    put: function(req, res) {
-        res.send('updated');
-    },
-    delete: function(req, res) {
-        res.send('deleted');
-    }
+let random = () => {
+  return Math.floor(Math.random() * 10000000)
 }
-
 const restaurant_controllers = {
-    get: function(req, res) {
-        restaurants.findAll({})
-        .then(data => {
-            console.log('restaurant data received')
-            res.status(200).send(data)
-        })
-        .catch(err => {
-            console.log('error receiving restaurant data', err)
-            res.status(401)
-        })
-    },
-    post: function(req, res) {
-        console.log('test')
-        res.send('applied')
-    },
-    put: function(req, res) {
-        res.send('updated');
-    },
-    delete: function(req, res) {
-        res.send('deleted');
-    }
+  get: function(req, res) {
+    connection.query(`SELECT * FROM restaurants where id=${random()}`, (err, result) => {
+      // console.log(JSON.stringify(result));
+      if (err) {
+        console.log(err);
+      }
+      // console.log(result)
+      res.status(200).send(result);
+    })
+  },
+  post: function(req, res) {
+    connection.query(`INSERT INTO restaurants (name) VALUES (${req.body.name})` , (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      // console.log(result);
+      res.status(200).send('restaurant created')
+    })
+  }
 }
 
 const review_controllers = {
-    get: function(req, res) {
-        let id = req.headers.restaurant_id
-        reviews.findAll({
-            where: {
-                restaurant_id: id
-            }
-        })
-        .then(data => {
-            console.log('review data received')
-            res.status(200).send(data)
-        })
-        .catch(err => {
-            console.log('error receiving review data', err)
-            res.status(401)
-        })
-    },
-    post: function(req, res) {
-        // console.log('posting')
-        // console.log(req.body.restaurantID)
-        // console.log(req.body.reviewDescription)
-        // console.log(req.body.date)
-        // console.log(req.body.counts)
-        // console.log(req.body.rating)
-        // console.log(req.body.user_id)
-        let x = req.body.restaurantID
-        let newReview = {'date': req.body.date, 'counts': req.body.counts, 'rating': req.body.rating, 'user_id': req.body.user_id, 'restaurant_id': req.body.restaurantID, 'description': req.body.reviewDescription}
-        //  restaurant_id': req.body.restaurantID, 'description': req.body.reviewDescription}
-        // console.log(newReview)
-        reviews.insertOrUpdate(newReview);
-        res.send('applied')
-    },
-    put: function(req, res) {
-        res.send('updated');
-    },
-    delete: function(req, res) {
-        res.send('deleted');
-    }
+  get: function(req, res) {
+    connection.query(`SELECT * FROM reviews WHERE id=${random()}`, (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      // console.log(result);
+      res.status(200).send(result);
+    })
+      // reviews.findAll({
+      //     where: {
+      //         restaurant_id: id
+      //     }
+      // })
+      
+  },
+  post: function(req, res) {
+    connection.query(`INSERT INTO reviews (date, counts, rating, users_id, restaurants_id, description) VALUES (${req.body.date}, ${req.body.counts}, ${req.body.rating}, ${req.body.users_id}, ${req.body.restaurants_id}, ${req.body.description})` , (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      // console.log(result);
+      res.status(200).send('review created')
+    })
+  },
+  put: function(req, res) {
+    connection.query('', (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      // console.log(result);
+    })
+  },
+  delete: function(req, res) {
+    connection.query('', (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      // console.log(result);
+    })
+  }
+}
+
+const photo_controllers = {
+  get: function(req, res) {
+    connection.query('SELECT id FROM reviews where id=1', (err, result) => {
+      if (err) {
+        console.log(err);
+        res.status(400).send();
+      }
+      // console.log(result);
+      res.status(200).send([]);
+    })
+  }
 }
 
 module.exports = {
-    user_controllers: user_controllers,
-    photo_controllers: photo_controllers,
-    restaurant_controllers: restaurant_controllers,
-    review_controllers: review_controllers
+  user_controllers,
+  restaurant_controllers,
+  review_controllers,
+  photo_controllers
 }
